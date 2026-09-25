@@ -17,25 +17,22 @@ function About() {
             
             <div className="about-text-content">
               <p>
-                My engineering journey began with the physical mechanics of robotics. Intrigued by how machines interpret and move through space, I joined VNIT Nagpur’s premier robotics lab, <strong>IvLabs</strong>. There, I worked on micro-aerial vehicles (UAVs), writing path-planning algorithms and integrating robot operating systems (ROS) to achieve autonomous flight.
-              </p>
-              
-              <p>
-                As I pushed the boundaries of hardware autonomy, I realized that intelligence is bottlenecked by perception. This shifted my focus toward <strong>Artificial Intelligence and Computer Vision</strong>. I designed deep learning pipelines using YOLO for object localization and integrated large language models (LLMs) with SBERT for semantic evaluation tasks.
+                Technology was around me long before I knew what I wanted to build with it.Watching my father and brother work in the field sparked my curiosity, but studying Computer Science at VNIT turned that curiosity into something of my own — a fascination with what I can imagine and create with software.
               </p>
 
               <p>
-                However, running heavy model inference on small hardware clusters brought a new challenge: scaling. To tackle this, I dove into <strong>Distributed Systems and Backend Engineering</strong>. During my internship at NatWest Group, I optimized enterprise backend performance with Spring Boot and AWS CloudWatch, processing and monitoring thousands of logs with microsecond latency.
+                Software led me to robotics, robotics led me to AI, and AI eventually led me to research. Through IvLabs, I worked with UAVs, computer vision, embedded systems, and autonomous navigation, discovering a side of software where code doesn't just produce an output on a screen, but interacts with the physical world. Along the way, I've built everything from backend applications to autonomous systems, always finding myself drawn to the next question.
               </p>
 
               <p>
-                Today, I stand at the intersection of these fields. I am not a developer who memorizes syntax; I am a <strong>system designer</strong> focused on building the software that powers intelligent, scalable autonomous networks.
+                <strong>I'm a software developer by foundation, a researcher by curiosity, and a builder at heart.</strong>
               </p>
+
 
               <div className="future-goals-block">
                 <h4>Future Outlook</h4>
                 <p>
-                  I am actively seeking research internships, software engineering roles, and graduate admissions (MS/PhD pathways) for Fall 2027. My goal is to advance swarm-agent coordination and robust cloud-native AI infrastructures in elite research environments.
+                  Looking for opportunities to learn, build, and contribute. I'm actively seeking a 6-month software engineering internship from January to May, and I'm also open to full-time opportunities where I can work on meaningful products, learn from experienced teams, and grow as a software engineer. I'm open to both remote and on-site roles.
                 </p>
               </div>
             </div>
