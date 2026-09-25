@@ -81,13 +81,17 @@ function App() {
     return hash || 'hero';
   });
 
-  // Listen to hash change for instant page view redirection
+  // Listen to hash change for smooth scrolling
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
       if (hash) {
         setActiveSection(hash);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (hash === 'hero' || hash === 'home') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' });
+        }
       }
     };
 
@@ -97,8 +101,14 @@ function App() {
 
   const handleSelectSection = (id: string) => {
     setActiveSection(id);
-    window.location.hash = id;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (id === 'hero' || id === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   // Theme Sync
@@ -108,72 +118,6 @@ function App() {
 
   const handleToggleTheme = () => {
     setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  };
-
-  const renderViewContent = () => {
-    switch (activeSection) {
-      case 'hero':
-      case 'home':
-        return (
-          <>
-            <Main />
-            <Highlights />
-            <CurrentlyWorking />
-          </>
-        );
-      case 'about':
-        return <About />;
-      case 'experience':
-        return <Experience />;
-      case 'research':
-        return <Research />;
-      case 'projects':
-        return <Project />;
-      case 'publications':
-        return <Publications />;
-      case 'skills':
-        return <TechnicalSkills />;
-      case 'achievements':
-        return <Achievements />;
-      case 'leadership':
-        return <Leadership />;
-      case 'timeline':
-        return <Timeline />;
-      case 'github':
-        return SHOW_GITHUB_CODE_PRESENCE ? <GithubActivity /> : <Main />;
-      case 'blog':
-        return SHOW_TECHNICAL_BLOG ? <Blog /> : <Main />;
-      case 'contact':
-        return <Contact />;
-      case 'all':
-        return (
-          <>
-            <Main />
-            <Highlights />
-            <About />
-            <CurrentlyWorking />
-            <Experience />
-            <Research />
-            <Project />
-            <Publications />
-            <TechnicalSkills />
-            <Achievements />
-            <Leadership />
-            <Timeline />
-            {SHOW_GITHUB_CODE_PRESENCE && <GithubActivity />}
-            {SHOW_TECHNICAL_BLOG && <Blog />}
-            <Contact />
-          </>
-        );
-      default:
-        return (
-          <>
-            <Main />
-            <Highlights />
-            <CurrentlyWorking />
-          </>
-        );
-    }
   };
 
   return (
@@ -187,9 +131,23 @@ function App() {
           onSelectSection={handleSelectSection}
         />
 
-        {/* View Page Content */}
-        <main className="page-view-content" style={{ minHeight: '80vh', paddingTop: '70px' }}>
-          {renderViewContent()}
+        {/* Continuous Flow of All Sections */}
+        <main className="page-sections-flow">
+          <Main />
+          <Highlights />
+          <About />
+          <CurrentlyWorking />
+          <Experience />
+          <Research />
+          <Project />
+          <Publications />
+          <TechnicalSkills />
+          <Achievements />
+          <Leadership />
+          <Timeline />
+          {SHOW_GITHUB_CODE_PRESENCE && <GithubActivity />}
+          {SHOW_TECHNICAL_BLOG && <Blog />}
+          <Contact />
         </main>
 
         {/* Credit footer */}

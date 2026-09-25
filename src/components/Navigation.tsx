@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -36,18 +36,49 @@ function Navigation({ mode, onToggleTheme, activeSection: propActiveSection, onS
 
   const currentActiveSection = propActiveSection || localActiveSection;
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 180;
+      if (window.scrollY < 120) {
+        setLocalActiveSection('hero');
+        return;
+      }
+
+      for (const item of navItems) {
+        const el = document.getElementById(item[1]);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setLocalActiveSection(item[1]);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const handleNavClick = (id: string) => {
     setMobileOpen(false);
+    setLocalActiveSection(id);
     if (onSelectSection) {
       onSelectSection(id);
     } else {
-      setLocalActiveSection(id);
-      window.location.hash = id;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (id === 'hero' || id === 'home') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
     }
   };
 
@@ -55,8 +86,8 @@ function Navigation({ mode, onToggleTheme, activeSection: propActiveSection, onS
     <>
       <header className="nav-bar-fixed">
         <div className="nav-container">
-          <div className="nav-logo" onClick={() => handleNavClick('hero')}>
-            <span>Mrunmayee Limaye</span>
+          {/* Logo / Monogram - name removed to prevent navbar overlap */}
+          <div className="nav-logo" onClick={() => handleNavClick('hero')} title="Scroll to top">
             <span className="logo-dot"></span>
           </div>
 
@@ -141,24 +172,26 @@ function Navigation({ mode, onToggleTheme, activeSection: propActiveSection, onS
         }
 
         .nav-logo {
-          font-weight: 800;
-          font-size: clamp(1.2rem, 1.4vw, 1.5rem);
-          letter-spacing: -0.02em;
-          color: var(--text-primary);
           cursor: pointer;
           display: flex;
           align-items: center;
-          gap: 6px;
-          white-space: nowrap !important;
+          justify-content: center;
           flex-shrink: 0;
+          padding: 6px;
         }
 
         .logo-dot {
           display: inline-block;
-          width: 7px;
-          height: 7px;
+          width: 10px;
+          height: 10px;
           border-radius: 50%;
           background-color: var(--accent-primary);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          box-shadow: 0 0 8px rgba(201, 108, 74, 0.4);
+        }
+
+        .nav-logo:hover .logo-dot {
+          transform: scale(1.35);
         }
 
         .desktop-nav {
@@ -166,8 +199,8 @@ function Navigation({ mode, onToggleTheme, activeSection: propActiveSection, onS
           align-items: center;
           justify-content: center;
           flex-wrap: nowrap !important;
-          gap: clamp(2px, 0.5vw, 8px);
-          flex-shrink: 1;
+          gap: clamp(2px, 0.5vw, 10px);
+          flex: 1;
           min-width: 0;
           overflow-x: auto;
           scrollbar-width: none;
