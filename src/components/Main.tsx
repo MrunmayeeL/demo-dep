@@ -4,6 +4,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
 import SchoolIcon from '@mui/icons-material/School';
 import DescriptionIcon from '@mui/icons-material/Description';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const TYPING_WORDS = [
   "Multi-Agent Systems",
@@ -132,17 +133,74 @@ function Main() {
         </div>
       </div>
 
+      {/* Scroll Down / Read More Arrow Indicator */}
+      <div className="hero-scroll-indicator">
+        <a 
+          href="#about" 
+          className="scroll-down-btn"
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          <span>Read More</span>
+          <KeyboardArrowDownIcon className="bounce-arrow" fontSize="small" />
+        </a>
+      </div>
+
       <style>{`
         .hero-section {
-          min-height: 80vh;
+          min-height: 85vh;
           display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
-          padding: 120px 24px 60px 24px;
+          padding: 120px 24px 80px 24px;
           position: relative;
           overflow: hidden;
           max-width: 1240px;
           margin: 0 auto;
+        }
+
+        .hero-scroll-indicator {
+          margin-top: 40px;
+          z-index: 10;
+          display: flex;
+          justify-content: center;
+        }
+
+        .scroll-down-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          color: var(--text-primary);
+          font-size: 0.88rem;
+          font-weight: 700;
+          padding: 8px 20px;
+          border-radius: 99px;
+          border: 1.5px solid var(--border-color);
+          background-color: var(--card-bg);
+          transition: all 0.3s ease;
+          text-decoration: none;
+          box-shadow: 0 4px 14px var(--shadow-color);
+          cursor: pointer;
+        }
+
+        .scroll-down-btn:hover {
+          color: var(--accent-primary);
+          border-color: var(--accent-primary);
+          transform: translateY(3px);
+          background-color: rgba(201, 108, 74, 0.08);
+        }
+
+        .bounce-arrow {
+          animation: bounce 1.8s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+          40% { transform: translateY(4px); }
+          60% { transform: translateY(2px); }
         }
 
         .hero-flex-container {
